@@ -1,7 +1,12 @@
 # HomeFace
 
 # Authors
-<a href="http://github.com/meiriko">Meir Shahar</a>/Coder, maker, hacker who likes art.
+* <a href="http://github.com/meiriko">Meir Shahar (MS)</a>/Coder, maker, hacker who likes art.
+* <a href="http://www.hila-laiser-beja.com">Hila Laiser Beja (HBJ)</a>/An artist.
+
+# Project Description
+**HomeFace** is an interactive system that does feature extraction from the human face and draws a *naive* home based on the previously extracted positions.
+The <a href="http://en.wikipedia.org/wiki/Golden_ratio">*Golden Ratio*</a> is known for being aesthetically pleasing and now wonder the human face proportions and distances hold this ratio. As an artist who has an ongoing interest in <a href="http://www.hila-laiser-beja.com/#!photographs">the facades of homes</a>, HBJ believes the way we draw the naive home and our relationship to it is not incidental, further more, HBJ believes that home sketches generated from our "sampled" face proportions will reflect and symbolize our own unique identity.
 
 All updates are made using [Github Flavoured Markdown Language](https://help.github.com/articles/github-flavored-markdown). Please ensure that your files use the GitHub Flavoured formatting.
 
