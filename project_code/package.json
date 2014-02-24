@@ -7,5 +7,30 @@
     "grunt": "~0.4.2",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-uglify": "~0.2.7"
-  }
+  },
+  "scripts": {
+    "start": "node server1.js"
+  },
+  "name": "HomeFace",
+  "bugs": {
+    "url": "https://github.com/auduno/clmtrackr/issues"
+  },
+  "homepage": "https://github.com/auduno/clmtrackr",
+  "version": "0.0.1",
+  "description": "HomeFace for DevArt",
+  "main": "server1.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "connect": "~2.13.0",
+    "request": "~2.34.0",
+    "require": "~0.5.0"
+  },
+  "keywords": [
+    "DevArt",
+    "HomeFace"
+  ],
+  "author": "Meir Shahar",
+  "license": "ISC"
 }
