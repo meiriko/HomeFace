@@ -4,7 +4,7 @@
             "insert apis"
         ],
         "platforms": [
-            "insert platforms"
+            "heroku"
         ],
         "toolkits": [
             "Node.js",
