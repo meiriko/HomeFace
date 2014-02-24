@@ -1,7 +1,7 @@
 {
   "repository": {
     "type": "git",
-    "url": "https://github.com/auduno/clmtrackr.git"
+    "url": "git@github.com:meiriko/HomeFace.git"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
