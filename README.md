@@ -31,7 +31,7 @@ All updates are made using [Github Flavoured Markdown Language](https://help.git
 
 ### Your Cover Image  
 
-To start with you’ll need to replace the file **cover.jpg** inside the **/project_images** folder with a image of your choice to add your Cover Image on your Project Page. This will make your project to appear in the DevArt Gallery. 
+To start with youâ€™ll need to replace the file **cover.jpg** inside the **/project_images** folder with a image of your choice to add your Cover Image on your Project Page. This will make your project to appear in the DevArt Gallery. 
 
 **A 1000 x 500 pixels jpeg is the optimum size.**
 
@@ -79,14 +79,14 @@ Edit  **project_technologies.json**  using the example JSON structure to define 
 
 To create a Project Post,  duplicate the example post in **project_posts/** folder renaming the file using the same convention **YYYY-MM-DD-POST-TITLE.MD** that applies to date and title of your post at the time.
 
-This section is like a blog of your progress, where you will document your process—from early napkin sketches to working prototypes. As soon as you have a rough idea of your project, you should create your first Project Post. We encourage you to be as visual as possible including links, images and video.  The Commissioned Interactive Artists will be using the same template so be sure to follow their ‘open process’ as their projects unfold.  Get started early and post often - you'll need at least 5 Posts to be eligible for judging. See what the judges will be looking for in the Judging Criteria on the [Enter Now Page](https://devart.withgoogle.com/#/enter-now/judging-criteria) of the website.
+This section is like a blog of your progress, where you will document your processâ€”from early napkin sketches to working prototypes. As soon as you have a rough idea of your project, you should create your first Project Post. We encourage you to be as visual as possible including links, images and video.  The Commissioned Interactive Artists will be using the same template so be sure to follow their â€˜open processâ€™ as their projects unfold.  Get started early and post often - you'll need at least 5 Posts to be eligible for judging. See what the judges will be looking for in the Judging Criteria on the [Enter Now Page](https://devart.withgoogle.com/#/enter-now/judging-criteria) of the website.
 
 **Make sure that images in your Project Posts have the maximum size of 1000 x 1000 pixels otherwise it will not appear on your Project Page. And for any videos upload to YouTube and insert the YouTube embed link.**
 
 ### Mark Your Project as Complete 
-When you have completed your submission, anytime before the deadline of **28 March 2014, 18:00 GMT**, it’s essential that you mark your project as complete on your Project Page. **Only projects that have been marked as ‘complete’ are eligible for judging.** Before you mark your project as as complete please double-check you’ve done the following:
+When you have completed your submission, anytime before the deadline of **28 March 2014, 18:00 GMT**, itâ€™s essential that you mark your project as complete on your Project Page. **Only projects that have been marked as â€˜completeâ€™ are eligible for judging.** Before you mark your project as as complete please double-check youâ€™ve done the following:
 
-1. Your **Project Summary** is fully complete including your project name, a detailed description of your work and supporting images and videos of your completed project. If possible, include a link to a working version of your project. And don’t forget to update your Cover Image with an image that best represents your final piece.
+1. Your **Project Summary** is fully complete including your project name, a detailed description of your work and supporting images and videos of your completed project. If possible, include a link to a working version of your project. And donâ€™t forget to update your Cover Image with an image that best represents your final piece.
 2. Your **Project Technologies** includes keywords for all themes explored and you have defined all technologies used for your project, including at least one Google technology. 
 3. You have at least **5 Project Posts** demonstrating your progress.
 
@@ -95,7 +95,7 @@ See Judging Criteria on [Enter Now Page](https://devart.withgoogle.com/#/enter-n
 
 ##Moderation 
 
-Whenever you update your Project Page with any content, it will be put forward for moderation and will be only visible to you until approved by the DevArt moderators. This process may take some time, so please bear with us. You’ll see a Pending Moderation notification in your Project Page. 
+Whenever you update your Project Page with any content, it will be put forward for moderation and will be only visible to you until approved by the DevArt moderators. This process may take some time, so please bear with us. Youâ€™ll see a Pending Moderation notification in your Project Page. 
 
 If your post is flagged as including inappropriate content it may be removed. The same applies to any content that is flagged by users as inappropriate content. Entrants who find their Project Page has been removed can delete their forked project in GitHub and re-enter. 
 
