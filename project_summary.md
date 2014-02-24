@@ -1,9 +1,10 @@
-# Project Title
-Insert the name of your project
+# HomeFace
+Your Face draws your Home
 
 ## Authors
-- Insert main author name, surname, github account
-- Insert other author(s) name, surname, github account (one per list element)
+- [Hila Laiser Beja](http://www.hila-laiser-beja.com "Visit HBJ's site") (HBJ) / An artist.
+- [Meir Shahar](http://github.com/meiriko "Meir's github") (MS) / Coder, maker, hacker who likes art.
+- Eri Rubin
 
 ## Description
 Insert a description containing about 100 to 150 words, including your motivation and the meaning behind your idea and execution. The Judges will be keen to know how your idea pushes the boundaries of code and technology. 
