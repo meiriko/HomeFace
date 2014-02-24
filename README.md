@@ -9,6 +9,7 @@
 The <a href="http://en.wikipedia.org/wiki/Golden_ratio">*Golden Ratio*</a> is known for being aesthetically pleasing and now wonder the human face proportions and distances hold this ratio. As an artist who has an ongoing interest in <a href="http://www.hila-laiser-beja.com/#!photographs">the facades of homes</a>, HBJ believes the way we draw the naive home and our relationship to it is not incidental, further more, HBJ believes that home sketches generated from our "sampled" face proportions will reflect and symbolize our own unique identity.
 
 TBC
+<!--
 All updates are made using [Github Flavoured Markdown Language](https://help.github.com/articles/github-flavored-markdown). Please ensure that your files use the GitHub Flavoured formatting.
 
 **You may provide links to websites, videos & images but do not upload content that does not belong to you.**
@@ -101,3 +102,4 @@ Whenever you update your Project Page with any content, it will be put forward f
 If your post is flagged as including inappropriate content it may be removed. The same applies to any content that is flagged by users as inappropriate content. Entrants who find their Project Page has been removed can delete their forked project in GitHub and re-enter. 
 
 For more information about what is considered as inappropriate content, visit the [Competition Rules](https://devart.withgoogle.com/#/competition-rules).
+-->
