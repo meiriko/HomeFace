@@ -7,7 +7,8 @@
             "insert platforms"
         ],
         "toolkits": [
-            "insert toolkits"
+            "Node.js",
+            "OpenCV"
         ]
     },
     "themes": [
