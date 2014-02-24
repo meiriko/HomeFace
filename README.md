@@ -1,8 +1,8 @@
 # HomeFace
 
 # Authors
-* <a href="http://github.com/meiriko">Meir Shahar (MS)</a>/Coder, maker, hacker who likes art.
-* <a href="http://www.hila-laiser-beja.com">Hila Laiser Beja (HBJ)</a>/An artist.
+* <a href="http://www.hila-laiser-beja.com">Hila Laiser Beja</a> (HBJ) / An artist.
+* <a href="http://github.com/meiriko">Meir Shahar</a> (MS) / Coder, maker, hacker who likes art.
 
 # Project Description
 **HomeFace** is an interactive system that does feature extraction from the human face and draws a *naive* home based on the previously extracted positions.
