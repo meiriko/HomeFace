@@ -4,10 +4,11 @@
             "insert apis"
         ],
         "platforms": [
-            "insert platforms"
+            "heroku"
         ],
         "toolkits": [
-            "insert toolkits"
+            "Node.js",
+            "OpenCV"
         ]
     },
     "themes": [
