@@ -12,6 +12,10 @@ function max(){
 	}
 }
 
+function abs(num){
+	return Math.abs(num);
+}
+
 function min(){
 	if(arguments.length === 0) {
 		return undefined
