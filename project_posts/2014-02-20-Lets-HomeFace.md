@@ -1,4 +1,4 @@
-So, HBJ and MS met for the first time to discuss the project. As Google's rep described it, it is not only about the technology and the implementation but also about the process and the unique gathering of a an artist and a coder. The dialog that's built and the journey for a common language.
+So, HLB and MS met for the first time to discuss the project. As Google's rep described it, it is not only about the technology and the implementation but also about the process and the unique gathering of a an artist and a coder. The dialog that's built and the journey for a common language.
 
 For MS it is not the first time of stepping out of his domain and crossing over. MS was technology manager for 7 years at LIRT - Laboratory for Innovation in Rehabilitation Technology (University of Haifa). LIRT was originally started by Prof. Tamar Weiss, an occupational therapist (OT) and the first generation of researchers was composed of OTs. As the lab grew bigger, it brought in researchers from various fields including physiotherapy, psychology and brain research.
 
@@ -30,7 +30,7 @@ To set a common ground, we started by going through some existing code based art
 
 (and, again, many many others)
 
-HBJ brought up the fact that she is fascinated by facades of homes, the Golden Ratio, and the fact that there is a great resemblance between the naive home we draw as kids and the human face, mouth as the door, eyes as the windows and our face's contour as the walls and roof, and so our journey, our adventure, begins.
+HLB brought up the fact that she is fascinated by facades of homes, the Golden Ratio, and the fact that there is a great resemblance between the naive home we draw as kids and the human face, mouth as the door, eyes as the windows and our face's contour as the walls and roof, and so our journey, our adventure, begins.
 
 Following the meeting, it appears that:
 1. We need to find a feature extraction library
