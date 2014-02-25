@@ -46,7 +46,6 @@
 			<br/>
 			<input type="button" class="btn" value="start" onclick="animate()"></input>
 			<input type="button" class="btn" value="load from url" onclick="loadUrl()"></input>
-			<!-- <input type="button" class="btn" value="manually select face" onclick="selectBox()"></input> -->
 			<input type="file" class="btn" id="files" name="files[]" />
 			<input type="button" class="btn" value="export" id="exportButton" disabled="true" onclick="exportData()"></input>
 			<p id="convergence"></p>
@@ -82,11 +81,23 @@
 */
 				
 				var drawRequest;
+				var homeJson;
 				
 				function animate(box) {
 					ctrack.start(document.getElementById('imageHF'), box);
 					drawLoop();
 				}
+
+				function loadDefaultJson() {
+					$.getJSON('/examples/home.json', function(data) {
+						homeJson = data;
+					}).fail(function(jqxhr, textStatus, error) {
+						console.log( textStatus );
+						homeJson = {};
+					});
+				}
+
+				loadDefaultJson();
 
 				function setStrokeColor(newColor){
 					var canvas = document.getElementById('imageHF')
@@ -145,15 +156,11 @@
 				}
 
 				function drawHome(points){
-					$.getJSON('/examples/home.json', function(data) {
-						for( var key in data ){
-							console.log( 'plotting ' , key ) ;
-							console.log(data[key]);
-							eval( data[key] );
-						}
-					}).fail(function(jqxhr, textStatus, error) {
-						console.log( textStatus );
-					});
+					for( var key in homeJson ){
+						console.log( 'plotting ' , key ) ;
+						console.log(homeJson[key]);
+						eval( homeJson[key] );
+					}
 				}
 
 				function drawLoop() {
@@ -194,25 +201,6 @@
 				}, false);
 */
 				// manual selection of faces (with jquery imgareaselect plugin)
-				function selectBox() {
-					overlayCC.clearRect(0, 0, 720, 576);
-					document.getElementById('convergence').innerHTML = "";
-					document.getElementById('exportButton').disabled = true;
-					ctrack.reset();
-					$('#overlayHF').addClass('hide');
-					$('#imageHF').imgAreaSelect({
-						handles : true,
-						onSelectEnd : function(img, selection) {
-							// create box
-							var box = [selection.x1, selection.y1, selection.width, selection.height];
-							
-							// do fitting
-							animate(box);
-							$('#overlayHF').removeClass('hide');
-						},
-						autoHide : true
-					});
-				}
 
 				// function to start showing images
 				function loadImage() {
