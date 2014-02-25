@@ -89,3 +89,15 @@ function xVal(){
 		return result;
 	}
 }
+
+function removeStringTail(str){
+	var tmpStr = str.toLowerCase();
+	for(var i = 1 ; i < arguments.length ; i++){
+		var strTail = arguments[i].toLowerCase();
+		if(tmpStr.lastIndexOf(strTail) === (tmpStr.length - strTail.length)){
+			return str.substring(0, str.length - strTail.length);
+		}
+	}
+	return str;
+}
+	

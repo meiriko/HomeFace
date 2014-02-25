@@ -19,6 +19,8 @@
 		<script src="../models/model_pca_20_svm.js"></script>
 		<script src="../js/clm.js"></script>
 		<script src="../js/utils.js"></script>
+		<script src="../js/base64.js"></script>
+		<script src="../js/canvas2image.js"></script>
 		<script src="../js/svmfilter_webgl.js"></script>
 		<script src="../js/svmfilter_fft.js"></script>
 		<script src="../js/mossefilter.js"></script>
@@ -46,17 +48,26 @@
 			<input type="button" class="btn" value="load from url" onclick="loadUrl()"></input>
 			<!-- <input type="button" class="btn" value="manually select face" onclick="selectBox()"></input> -->
 			<input type="file" class="btn" id="files" name="files[]" />
+			<input type="button" class="btn" value="export" id="exportButton" disabled="true" onclick="exportData()"></input>
 			<p id="convergence"></p>
 
 			<script>
-				var cc = document.getElementById('imageHF').getContext('2d');
 				var overlay = document.getElementById('overlayHF');
 				var overlayCC = overlay.getContext('2d');
 				var points;
+				var fileName = "HomeFace";
 			
+				function clearHomeCanvas(){
+					var ccHC = document.getElementById('homeCanvas').getContext('2d');
+					ccHC.fillStyle = "#AAA";
+					ccHC.fillRect(0,0,625,500);
+				}
+
 				var img = new Image();
 				img.onload = function() {
+					var cc = document.getElementById('imageHF').getContext('2d');
 					cc.drawImage(img,0,0,625, 500);
+					clearHomeCanvas();
 				};
 				img.src = './media/franck_02159.jpg';
 			
@@ -87,7 +98,6 @@
 
 					var homeCanvas = document.getElementById('homeCanvas')
 					cc = homeCanvas.getContext('2d');
-					// cc.clearRect(0,0,620,500);
 					cc.beginPath()
 					cc.rect(x,y,w,h);
 					cc.closePath()
@@ -152,6 +162,7 @@
 				document.addEventListener("clmtrackrConverged", function(event) {
 					document.getElementById('convergence').innerHTML = "CONVERGED";
 					document.getElementById('convergence').style.backgroundColor = "#00FF00";
+					document.getElementById('exportButton').disabled = false;
 					// stop drawloop
 					cancelRequestAnimFrame(drawRequest);
 					points = ctrack.getCurrentPosition();
@@ -168,6 +179,7 @@
 				function selectBox() {
 					overlayCC.clearRect(0, 0, 720, 576);
 					document.getElementById('convergence').innerHTML = "";
+					document.getElementById('exportButton').disabled = true;
 					ctrack.reset();
 					$('#overlayHF').addClass('hide');
 					$('#imageHF').imgAreaSelect({
@@ -187,6 +199,7 @@
 				// function to start showing images
 				function loadImage() {
 					if (fileList.indexOf(fileIndex) < 0) {
+						document.getElementById('exportButton').disabled = true;
 						var reader = new FileReader();
 						reader.onload = (function(theFile) {
 							return function(e) {
@@ -219,6 +232,7 @@
 						})(fileList[fileIndex]);
 						reader.readAsDataURL(fileList[fileIndex]);
 						overlayCC.clearRect(0, 0, 720, 576);
+						clearHomeCanvas();
 						document.getElementById('convergence').innerHTML = "";
 						ctrack.reset();
 					}
@@ -226,9 +240,8 @@
 				}
 
 				function loadImageFromUrl(imgUrl) {
-					var homeCanvas = document.getElementById('homeCanvas')
-					var ccHC = homeCanvas.getContext('2d');
-					ccHC.clearRect(0, 0, 625, 500);
+					clearHomeCanvas();
+					document.getElementById('exportButton').disabled = true;
 
 					var canvas = document.getElementById('imageHF')
 					var cc = canvas.getContext('2d');
@@ -259,14 +272,9 @@
 				}
 
 				function loadUrl(){
-					// 'http://www.slendertone.com.au/skin/vivid_dreams_lotus/images/pages/your_face.jpg'
 					var imgUrl = prompt("enter url","http://www.naircare.co.uk/images/main/hub/bg-face.jpg");
-					console.log(imgUrl);
+					fileName = imgUrl;
 					loadImageFromUrl('/pt/' + imgUrl);
-					//loadImageFromUrl('/pt/http://www.slendertone.com.au/skin/vivid_dreams_lotus/images/pages/your_face.jpg');
-					// fileList = ['http://www.slendertone.com.au/skin/vivid_dreams_lotus/images/pages/your_face.jpg'];
-					// fileIndex = 0;
-					// loadImage();
 				}
 
 				// set up file selector and variables to hold selections
@@ -291,6 +299,35 @@
 				} else {
 					$('#files').addClass("hide");
 					$('#loadimagetext').addClass("hide");
+				}
+
+				function exportData(){
+					fileName = removeStringTail(fileName, '.jpg','jpeg');
+					fileName = prompt("enter file name",fileName);
+					if( !fileName || fileName.lenght === 0 ){
+						return ;
+					}
+
+					var canvas = document.getElementById('imageHF')
+					var strData = Canvas2Image.getAsJPEG(canvas);
+					var link = document.createElement('a');
+					link.download = fileName + ".jpg";
+					link.href = strData;
+					link.click();
+
+					var homeCanvas = document.getElementById('homeCanvas')
+					strData = Canvas2Image.getAsJPEG(homeCanvas);
+					link = document.createElement('a');
+					link.download = fileName + "-sketch.jpg";
+					link.href = strData;
+					link.click();
+
+					var pointsData = "data:application/octet-stream," + encodeURIComponent(points.join(',\r\n'));
+					link = document.createElement('a');
+					link.download = fileName + "-points.txt";
+					link.href = pointsData;
+					link.click();
+
 				}
 			</script>
 		</div>
