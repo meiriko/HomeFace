@@ -88,6 +88,24 @@
 					drawLoop();
 				}
 
+				function setStrokeColor(newColor){
+					var canvas = document.getElementById('imageHF')
+					var cc = canvas.getContext('2d');
+					cc.strokeStyle = newColor;
+					var homeCanvas = document.getElementById('homeCanvas')
+					cc = homeCanvas.getContext('2d');
+					cc.strokeStyle = newColor;
+				}
+
+				function setStrokeWidth(newWidth){
+					var canvas = document.getElementById('imageHF')
+					var cc = canvas.getContext('2d');
+					cc.lineWidth = newWidth;
+					var homeCanvas = document.getElementById('homeCanvas')
+					cc = homeCanvas.getContext('2d');
+					cc.lineWidth = newWidth;
+				}
+
 				function rect(x,y,w,h){
 					var canvas = document.getElementById('imageHF')
 					var cc = canvas.getContext('2d');
@@ -127,7 +145,7 @@
 				}
 
 				function drawHome(points){
-					$.getJSON('/examples/home1.json', function(data) {
+					$.getJSON('/examples/home.json', function(data) {
 						for( var key in data ){
 							console.log( 'plotting ' , key ) ;
 							console.log(data[key]);
