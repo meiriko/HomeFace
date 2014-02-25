@@ -63,10 +63,12 @@
 				var ctrack = new clm.tracker({stopOnConvergence : true});
 				ctrack.init(pModel);
 			
+/*
 				stats = new Stats();
 				stats.domElement.style.position = 'absolute';
 				stats.domElement.style.top = '0px';
 				document.getElementById('containerHF').appendChild( stats.domElement );
+*/
 				
 				var drawRequest;
 				
@@ -78,10 +80,12 @@
 				function rect(x,y,w,h){
 					var canvas = document.getElementById('imageHF')
 					var cc = canvas.getContext('2d');
+/*
 					cc.beginPath()
 					cc.rect(x,y,w,h);
 					cc.closePath()
 					cc.stroke();
+*/
 
 					var homeCanvas = document.getElementById('homeCanvas')
 					cc = homeCanvas.getContext('2d');
@@ -100,16 +104,20 @@
 					var homeCanvas = document.getElementById('homeCanvas')
 					var cc = canvas.getContext('2d');
 					var ccHC = homeCanvas.getContext('2d');
+/*
 					cc.beginPath();
 					cc.moveTo(points[0][0],points[0][1]);
+*/
 					ccHC.beginPath();
 					ccHC.moveTo(points[0][0],points[0][1]);
 					for(var i = 1 ; i < points.length ; i++){
 						cc.lineTo(points[i][0], points[i][1]);
 						ccHC.lineTo(points[i][0], points[i][1]);
 					}
+/*
 					cc.closePath();
 					cc.stroke();
+*/
 					ccHC.closePath();
 					ccHC.stroke();
 				}
@@ -158,7 +166,7 @@
 				
 				// update stats on iteration
 				document.addEventListener("clmtrackrIteration", function(event) {
-					stats.update();
+					// stats.update();
 				}, false);
 
 				// manual selection of faces (with jquery imgareaselect plugin)
