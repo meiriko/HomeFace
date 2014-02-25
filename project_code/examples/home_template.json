@@ -1,0 +1,8 @@
+{
+	"leftWindow": "rect(min(xVal(19,20,23,24,25,26)),avg(max(yVal(23,24,25,26)),yVal(41)),max(xVal(23,24,25,26,22)) - min(xVal(22,23,24,25,26,19,20)),avg(max(yVal(19,20,21,22)),min(yVal(63,24,64))) - avg(max(yVal(23,24,25,26)),yVal(41)))",
+	"rightWindow": "setStrokeWidth(4);rect(min(xVal(15,16,17,18,28,29,30,31)),avg(max(yVal(28,70,31,69,30)),yVal(41)),max(xVal(15,16,17,18,28,29,30,31)) - min(xVal(15,16,17,18,28,29,30,31)),avg(max(yVal(15,16,17,18)),min(yVal(68,29,67))) - avg(max(yVal(28,70,31,69,30)),yVal(41)))",
+	"roof": "path([[xVal(0)-0.1*(xVal(14)-xVal(0)),min(yVal(20,21,17,16))] , [xVal(14)+0.1*(xVal(14)-xVal(0)),min(yVal(20,21,17,16))],[avg(xVal(0,14)), 2 * yVal(33) - yVal(7)]])",
+	"door": "setStrokeColor('#FF0000');rect(min(xVal(44)),min(yVal(7)),max(xVal(50)) - min(xVal(44)),max(yVal(62)) - min(yVal(7)))",
+	"house": "setStrokeWidth(3);rect(min(xVal(0,1,2)),max(yVal(5,6,7,8,9)),max(xVal(14,13,12)) - min(xVal(0,1,2)),min(yVal(20,21,17,16)) - max(yVal(5,6,7,8,9)))"
+}
+

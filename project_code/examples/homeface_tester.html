@@ -29,8 +29,8 @@
 		<link rel="stylesheet" type="text/css" href="./styles/imgareaselect-default.css" />
 		<script src="./ext_js/jquery.min.js"></script>
 		<script src="./ext_js/jquery.imgareaselect.pack.js"></script>
-		<script src="./ext_js/BlobBuilder.min.js"></script>
-		<script src="./ext_js/Filesaver.min.js"></script>
+		<!-- <script src="./ext_js/BlobBuilder.min.js"></script> -->
+		<!-- <script src="./ext_js/Filesaver.min.js"></script> -->
 		
 		<div id="content">
 			<h2>Face tracking in images</h2>
@@ -46,9 +46,18 @@
 			<br/>
 			<input type="button" class="btn" value="start" onclick="animate()"></input>
 			<input type="button" class="btn" value="load from url" onclick="loadUrl()"></input>
+			<input type="button" class="btn" value="edit definitions" onclick="editJson()"></input>
 			<input type="file" class="btn" id="files" name="files[]" />
 			<input type="button" class="btn" value="export" id="exportButton" disabled="true" onclick="exportData()"></input>
 			<p id="convergence"></p>
+
+			<div id="dialog-form" title="Create new user">
+				<p class="help">help content and sample</p>
+
+				<form>
+					<textarea rows="8" cols="120" name="jsonText" id="jsonText" class="text ui-widget-content ui-corner-all"></textarea>
+				</form>
+			</div>
 
 			<script>
 				var overlay = document.getElementById('overlayHF');
@@ -69,6 +78,7 @@
 					clearHomeCanvas();
 				};
 				img.src = './media/franck_02159.jpg';
+
 			
 				var ctrack = new clm.tracker({stopOnConvergence : true});
 				ctrack.init(pModel);
@@ -334,6 +344,10 @@
 					link.href = pointsData;
 					link.click();
 
+				}
+
+				function editJson() {
+					$( "#dialog-form" ).dialog( "open" );
 				}
 			</script>
 		</div>
