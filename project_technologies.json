@@ -5,12 +5,13 @@
         ],
         "platforms": [
             "heroku"
-            "App Engine"
+            "AppEngine"
         ],
         "toolkits": [
             "Node.js",
             "OpenCV",
             "jQuery"
+            "GO"
         ],
         "languages": [
             "GO"
