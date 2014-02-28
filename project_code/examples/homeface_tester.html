@@ -85,6 +85,7 @@
 				var overlay = document.getElementById('overlayHF');
 				var overlayCC = overlay.getContext('2d');
 				var points;
+				var drawingTransformValues;
 				var fileName = "HomeFace";
 			
 				function clearHomeCanvas(){
@@ -153,14 +154,18 @@
 					var canvas = document.getElementById('imageHF')
 					var cc = canvas.getContext('2d');
 					cc.beginPath()
-					cc.rect(x,y,w,h);
+					cc.rect(drawingTransformValues.dX + drawingTransformValues.sX * x, drawingTransformValues.dY + drawingTransformValues.sY * y, w * drawingTransformValues.sX , h * drawingTransformValues.sY);
 					cc.closePath()
 					cc.stroke();
 
 					var homeCanvas = document.getElementById('homeCanvas')
 					cc = homeCanvas.getContext('2d');
+					var marginX = homeCanvas.width/4;
+					var marginY = (homeCanvas.height/2);
+					var sX = (homeCanvas.width - 20)/2;
+					var sY = (homeCanvas.height - 20)/2;
 					cc.beginPath()
-					cc.rect(x,y,w,h);
+					cc.rect(marginX + sX * x, marginY + sY * y, sX * w, sY * h);
 					cc.closePath()
 					cc.stroke();
 				}
@@ -173,13 +178,19 @@
 					var homeCanvas = document.getElementById('homeCanvas')
 					var cc = canvas.getContext('2d');
 					var ccHC = homeCanvas.getContext('2d');
+					var marginX = homeCanvas.width/4;
+					var marginY = (homeCanvas.height/2);
+					var sX = (homeCanvas.width - 20)/2;
+					var sY = (homeCanvas.height - 20)/2;
 					cc.beginPath();
-					cc.moveTo(points[0][0],points[0][1]);
+					// cc.moveTo(points[0][0],points[0][1]);
+					cc.moveTo(drawingTransformValues.dX + drawingTransformValues.sX * points[0][0], drawingTransformValues.dY + drawingTransformValues.sY * points[0][1]);
 					ccHC.beginPath();
-					ccHC.moveTo(points[0][0],points[0][1]);
+					// ccHC.moveTo(points[0][0],points[0][1]);
+					ccHC.moveTo(marginX + points[0][0] * sX, marginY + sY * points[0][1]);
 					for(var i = 1 ; i < points.length ; i++){
-						cc.lineTo(points[i][0], points[i][1]);
-						ccHC.lineTo(points[i][0], points[i][1]);
+						cc.lineTo(drawingTransformValues.dX + drawingTransformValues.sX * points[i][0], drawingTransformValues.dY + drawingTransformValues.sY * points[i][1]);
+						ccHC.lineTo(marginX + sX * points[i][0], marginY + sY * points[i][1]);
 					}
 					cc.closePath();
 					cc.stroke();
@@ -187,7 +198,16 @@
 					ccHC.stroke();
 				}
 
-				function drawHome(points){
+				function prepareTransforms() {
+					var canvas = document.getElementById('imageHF')
+					var cc = canvas.getContext('2d');
+					var homeCanvas = document.getElementById('homeCanvas')
+					cc = homeCanvas.getContext('2d');
+					cc.setTransform(drawingTransformValues[0],0,0,drawingTransformValues[1],drawingTransformValues[2],drawingTransformValues[3]);
+				}
+
+				function drawHome(){
+					// prepareTransforms();
 					for( var key in homeJson ){
 						console.log( 'plotting ' , key ) ;
 						console.log(homeJson[key]);
@@ -215,6 +235,23 @@
 					alert("The tracking had problems converging on a face in this image. Try selecting the face in the image manually.")
 				}, false);
 				
+				function normalizePoints(){
+					var xS = xVal();
+					var yS = yVal();
+					var minX = min(xS);
+					var maxX = max(xS);
+					var minY = min(yS);
+					var maxY = max(yS);
+					var sX = maxX - minX;
+					var sY = maxY - minY;
+					points = points.map(function(point){
+						var newX = (point[0] - minX)/sX;
+						var newY = (point[1] - minY)/sY;
+						return ([newX,newY]);
+					});
+					return {sX: sX,sY:sY,dX:minX,dY:minY}; // the transform matrix to draw on the original image
+				}
+
 				// detect if tracker has converged
 				document.addEventListener("clmtrackrConverged", function(event) {
 					document.getElementById('convergence').innerHTML = "CONVERGED";
@@ -223,7 +260,8 @@
 					// stop drawloop
 					cancelRequestAnimFrame(drawRequest);
 					points = ctrack.getCurrentPosition();
-					drawHome(ctrack.getCurrentPosition());
+					drawingTransformValues = normalizePoints();
+					drawHome();
 				}, false);
 				
 				// update stats on iteration
