@@ -1,11 +1,11 @@
 {
     "technologies": {
         "apis": [
-            "insert apis"
+            "go datastore"
         ],
         "platforms": [
             "heroku"
-            "AppEngine"
+            "GAE"
         ],
         "toolkits": [
             "Node.js",
