@@ -10,7 +10,7 @@
         "toolkits": [
             "Node.js",
             "OpenCV",
-            "jQuery"
+            "jQuery",
             "GO"
         ],
         "languages": [
