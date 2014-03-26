@@ -24,7 +24,7 @@
     {{range $i,$k := .Vals}}
 		<div class="image-item">
 		  <div class="image-title">{{.Title}}</div>
-		  <a href="/show?key={{(index $keys $i).Encode}}" class="image-link">
+		  <a href="/morph?keys={{(index $keys $i).Encode}}" class="image-link">
 			  <img width="240" src="{{.ImageUrl}}"></img>
 		  </a>
 		  <input type="checkbox" class="image-checkbox" value="{{(index $keys $i).Encode}}">select</input>

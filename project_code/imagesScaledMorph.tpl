@@ -21,6 +21,11 @@
 			var imageMargin = 50;
 			var maxSx = 0;
 			var keysNum = 0;
+			var animationSpeed = 1;
+			var animationSleep = 0;
+			var doAnimation = false;
+			var animationDirection = 1;
+			var animationMix = 0;
 
 			var controlTemplate = '\
 				<div class="control-box">\
@@ -39,8 +44,15 @@
 						<div class="range-label">drawing opacity</div>\
 					</div>\
 					<div class="range-box">\
-						<input type="range" min="0.0" max="1" value="0" step="0.02" onchange="changeMix(loadedImages[$index], this.value)"></input>\
+						<input id="mix$index" type="range" min="0.0" max="1" value="0" step="0.02" onchange="changeMix(loadedImages[$index], this.value)"></input>\
 						<div class="range-label">mix</div>\
+					</div>\
+					<div class="range-box" $displayAnimation>\
+						<div class="range-label">animate\
+							<input type="checkbox" onchange="animate($index, this.checked);"/>\
+						</div>\
+						<input id="animationSpeed$index" type="range" min="0.5" max="5" value="1" step="0.2" onchange="animationSpeed = this.value"></input>\
+						<div class="range-label">animation speed</div>\
 					</div>\
 				</div>\
 			';
@@ -58,6 +70,7 @@
 				var canvas = document.getElementById('canvas');
 				// Create an empty project and a view for the canvas:
 				paper.setup(canvas);
+				paper.view.onFrame = animationTick;
 				// Create a Paper.js Path to draw a line into it:
 				// points = JSON.parse({{.Points}});
 
@@ -153,12 +166,13 @@
 
 			function drawShapesOnImages(config){
 				unifyScale(false);
+				var displayAnimation = (loadedImages.length === 1 ? "" : 'style="display:none"');
 				loadedImages.forEach(function(image, index){
 					if(! image.hasOwnProperty('mainGroup')){
 						image.mainGroup = new paper.Group();
 						image.mainGroup.opacity = 0.9;
 						mainGroup.addChild(image.mainGroup);
-						var controlString = stringTemplate(controlTemplate, {$imageName:loadedImages[index].Title, $index: index, $rasterOpacity: rasters[index].opacity, $drawingOpacity: image.mainGroup.opacity});
+						var controlString = stringTemplate(controlTemplate, {$imageName:loadedImages[index].Title, $index: index, $rasterOpacity: rasters[index].opacity, $drawingOpacity: image.mainGroup.opacity,$displayAnimation:displayAnimation});
 						$('#controls').append( controlString );
 						$('.color-box').colpick({
 							colorScheme:'dark',
@@ -245,6 +259,34 @@
 				// image.relatedSegments[2][0].x = 100;
 				// image.relatedSegments[4][0].y = 100;
 				// paper.view.draw();
+			}
+
+			function animationTick(event){
+				if( animationSleep > 0 ) {
+					animationSleep-- ;
+					return;
+				}
+				if( doAnimation ){
+					animationMix += animationDirection * animationSpeed / 100;
+					if( animationMix > 1 ) {
+						animationDirection = -1 ;
+						animationMix += animationDirection * animationSpeed / 100;
+						animationSleep = 30 * animationSpeed;
+					} else if( animationMix < 0 ) {
+						animationDirection = 1 ;
+						animationMix += animationDirection * animationSpeed / 100;
+						animationSleep = 30 * animationSpeed;
+					}
+					document.getElementById("mix0").value = animationMix;
+					changeMix(loadedImages[0] , animationMix);
+				}
+			}
+
+			function animate(index, status){
+				doAnimation = status;
+				if( status ){
+					animationMix = parseFloat( document.getElementById("mix0").value );
+				}
 			}
 
 			function changeMix(shape, val){
