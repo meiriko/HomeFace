@@ -4,9 +4,8 @@ We had a very busy few weeks. Discussing the possibilities and looking at the wo
 One of the main things we added is the ability to specify, besides the final mapping, an intermediate transformation. This shows how the basic shapes map to the final naive home. We found this to be more "ecological valid" and to illustrate much better the what the facial features map to the home.
 
 Just as a heads up, here is a series of images that demonstrate the result:
-
-![](/project_images/hf-series/mix-001.jpg)
-![](/project_images/hf-series/mix-002.jpg)
+-![](/project_images/hf-series/mix-001.jpg)
+-![](/project_images/hf-series/mix-002.jpg)
 ![](/project_images/hf-series/mix-003.jpg)
 ![](/project_images/hf-series/mix-004.jpg)
 ![](/project_images/hf-series/mix-005.jpg)
