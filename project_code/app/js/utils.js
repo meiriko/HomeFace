@@ -52,6 +52,48 @@ function avg(){
 	}
 }
 
+function xyValH(){
+	if(arguments.length === 0) {
+		return mappedPoints;
+	} else if(arguments.length === 1){
+		return mappedPoints[arguments[0]];
+	} else {
+		var result = [];
+		for(var i = 0 ; i < arguments.length ; i++){
+			result.push(mappedPoints[arguments[i]]);
+		};
+		return result;
+	}
+}
+
+function yValH(){
+	if(arguments.length === 0) {
+		return mappedPoints.map(function(item){return item[1];});
+	} else if(arguments.length === 1){
+		return mappedPoints[arguments[0]][1];
+	} else {
+		var result = [];
+		for(var i = 0 ; i < arguments.length ; i++){
+			result.push(mappedPoints[arguments[i]][1]);
+		};
+		return result;
+	}
+}
+
+function xValH(){
+	if(arguments.length === 0) {
+		return mappedPoints.map(function(item){return item[0];});
+	} else if(arguments.length === 1){
+		return mappedPoints[arguments[0]][0];
+	} else {
+		var result = [];
+		for(var i = 0 ; i < arguments.length ; i++){
+			result.push(mappedPoints[arguments[i]][0]);
+		};
+		return result;
+	}
+}
+
 function xyVal(){
 	if(arguments.length === 0) {
 		return points;

@@ -31,7 +31,7 @@
 		</div>
     {{end}}
 	<br/>
-	<form action="compareImages">
+	<form action="morph">
 		<input type="hidden" id="keys" name="keys" value=""></input>
 		<input type="submit" value="compare"></input>
 	</form>

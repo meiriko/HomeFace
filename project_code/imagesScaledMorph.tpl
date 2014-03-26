@@ -15,6 +15,7 @@
 			var mainGroup;
 			var rasters = [];
 			var points;
+			var relatedSegments;
 			var imgData;
 			var loadedImages = [];
 			var imageMargin = 50;
@@ -37,11 +38,14 @@
 						<input type="range" min="0.0" max="1" value="$drawingOpacity" step="0.02" onchange="changeOpacity(loadedImages[$index].mainGroup, this.value)"></input>\
 						<div class="range-label">drawing opacity</div>\
 					</div>\
+					<div class="range-box">\
+						<input type="range" min="0.0" max="1" value="0" step="0.02" onchange="changeMix(loadedImages[$index], this.value)"></input>\
+						<div class="range-label">mix</div>\
+					</div>\
 				</div>\
 			';
 
 			window.onload = function() {
-				// alert(getUrlParameters());
 				params = getUrlParameters();
 				if(params.hasOwnProperty('keys')){
 					var keys = decodeURIComponent(params.keys).split(',');
@@ -96,6 +100,10 @@
 				$.getJSON('/imageData', {key: key}, function(image){
 					maxSx = Math.max( maxSx, image.SX );
 					loadedImages.push(image);
+					var jsonPoints =  JSON.parse(image.Points);
+					image.basePoints = jsonPoints.map( function(point){
+						return new paper.Point( imageMargin + point[0] * image.SX , imageMargin + point[1] * image.SY );
+					});
 					var raster = new paper.Raster(image.ImageUrl);
 					image.raster = raster;
 					rasters.push(raster);
@@ -113,7 +121,24 @@
 				return val;
 			}
 
-			function path(points, config){
+			function path(pointsInd, config){
+				config = config || {"strokeColor":"red"};
+				var i;
+				if(! config.hasOwnProperty("strokeColor")){
+					config.strokeColor = "red";
+				}
+				var val = new paper.Path(config);
+				val.moveTo( points[pointsInd[0]] );
+				for( i = 1 ; i < pointsInd.length ; i++ ){
+					val.lineTo( points[pointsInd[i]] );
+				}
+				for( i = 0 ; i < pointsInd.length ; i++ ){
+					relatedSegments[pointsInd[i]].push( val.segments[i].point );
+				}
+				return val;
+			}
+
+			function xxpath(points, config){
 				config = config || {"strokeColor":"red"};
 				if(! config.hasOwnProperty("strokeColor")){
 					config.strokeColor = "red";
@@ -148,8 +173,15 @@
 						}).css('background-color', '#ffffff');
 					}
 
-					points = JSON.parse(image.Points);
-					console.log('points: ' , points.join(','));
+					/*
+					var jsonPoints =  JSON.parse(image.Points);
+					points = jsonPoints.map( function(point){
+						return new paper.Point( point[0], point[1] );
+					});
+					*/
+					points = image.basePoints;
+					relatedSegments = image.relatedSegments;
+					// console.log('points: ' , points.join(','));
 					imgData = image;
 					drawShapes(config, image.mainGroup, true);
 				});
@@ -164,6 +196,8 @@
 				Object.keys(config).forEach(function(key){
 					if( key === 'name' ){
 						console.log('drawing ' , config[key]);
+					} else if( key === 'map' ){
+						console.log('loading mapping');
 					} else {
 						var child = config[key];
 						if(Array.isArray(child)){
@@ -196,6 +230,33 @@
 				}
 			}
 
+			function updateImageMix(image, val){
+				for( var i = 0 ; i < image.basePoints.length ; i++ ){
+					var segmentPoints = image.relatedSegments[i];
+					if(segmentPoints && segmentPoints.length){
+						var newX = image.basePoints[i].x * (1 - val) + image.mappedPoints[i].x * val ;
+						var newY = image.basePoints[i].y * (1 - val) + image.mappedPoints[i].y * val ;
+						segmentPoints.forEach(function(point){
+							point.x = newX;
+							point.y = newY;
+						});
+					}
+				}
+				// image.relatedSegments[2][0].x = 100;
+				// image.relatedSegments[4][0].y = 100;
+				// paper.view.draw();
+			}
+
+			function changeMix(shape, val){
+				if(Array.isArray(shape)){
+					shape.forEach(function(item){
+						updateImageMix(item, val);
+					});
+				} else {
+					updateImageMix(shape, val);
+				}
+			}
+
 			function extractProperty(array, property){
 				return array.map(function(item){
 					return item[property];
@@ -207,6 +268,56 @@
 					item.visible = visibility;
 				});
 			}
+
+			function xRange(ind1, ind2, ratio){
+				return (mappedPoints[ind1].x * ratio + mappedPoints[ind2].x * (1-ratio));
+				// return (p1[0] * ratio + p2[0] * (1-ratio));
+			}
+
+			function yRange(ind1, ind2, ratio){
+				// return (p1[1] * ratio + p2[1] * (1-ratio));
+				return (mappedPoints[ind1].y * ratio + mappedPoints[ind2].y * (1-ratio));
+			}
+
+			function mapPoints(mapConfig){
+				loadedImages.forEach(function(image, index){
+					image.mappedPoints = image.basePoints.map( function(point) {
+						return (new paper.Point(point));
+					});
+					// array of arrays for later iteration
+					image.relatedSegments = image.basePoints.map( function(point) {
+						return [];
+					});
+					points = JSON.parse(image.Points);
+					mappedPoints = image.mappedPoints;
+					// points = image.Points;
+					if(mapConfig.hasOwnProperty("keyPoints")){
+						var kpConfig = mapConfig.keyPoints;
+						Object.keys(kpConfig).forEach(function(key){
+							var ind = parseInt(key);
+							if( ! isNaN(ind) ){
+								if( ind < image.mappedPoints.length ){
+									var mappedValue = eval(kpConfig[key] );
+									image.mappedPoints[ind] = new paper.Point( imageMargin + mappedValue[0] * image.SX , imageMargin + mappedValue[1] * image.SY );
+								}
+							}
+						});
+					}
+					if(mapConfig.hasOwnProperty("points")){
+						var pConfig = mapConfig.points;
+						Object.keys(pConfig).forEach(function(key){
+							var ind = parseInt(key);
+							if( ! isNaN(ind) ){
+								if( ind < image.mappedPoints.length ){
+									var mapVal = eval(pConfig[key]);
+									image.mappedPoints[ind].x = mapVal[0];
+									image.mappedPoints[ind].y = mapVal[1];
+								}
+							}
+						});
+					}
+				});
+			}
 		</script>
 		<script>
 			$.getJSON('configTitles', function(data) {
@@ -214,7 +325,11 @@
 				$select.on('change', function(){
 					if( this.value && this.value.length ){
 						$.getJSON('config',{key:this.value}, function(data){
-							drawShapesOnImages(JSON.parse(data.Config), mainGroup);
+							var config = JSON.parse(data.Config);
+							if(config.hasOwnProperty("map")){
+								mapPoints(config.map);
+							}
+							drawShapesOnImages(config, mainGroup);
 						});
 					}
 				});
@@ -229,7 +344,7 @@
 		</script>
 	</head>
 	<body>
-		<h2>Images comparison</h2>
+		<h2>Images comparison and morph</h2>
 		<div>Select config: <select id="config" style="width: 200px;"></select></div>
 		<div><canvas id="canvas" width="640" height="480" ></canvas></div>
 		<div id="controls">
@@ -247,6 +362,10 @@
 				<div class="range-box">
 					<input type="range" min="0.0" max="1" value="$drawingOpacity" step="0.02" onchange="changeOpacity(extractProperty(loadedImages,'mainGroup'), this.value)"></input>
 					<div class="range-label">drawing opacity</div>
+				</div>
+				<div class="range-box">
+					<input type="range" min="0.0" max="1" value="0" step="0.02" onchange="changeMix(loadedImages, this.value)"></input>
+					<div class="range-label">mix</div>
 				</div>
 			</div>
 		</div>

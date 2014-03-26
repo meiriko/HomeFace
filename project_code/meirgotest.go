@@ -45,13 +45,11 @@ type ConfigResults struct{
 func init() {
     http.HandleFunc("/pt/", passThrough)
 
-    http.HandleFunc("/hf", goToHf)
-    http.HandleFunc("/", goToHf)
-
     http.HandleFunc("/show", showImage)
     http.HandleFunc("/images", listImages)
     http.HandleFunc("/imageData", getImageData)
     http.HandleFunc("/compareImages", compareImages)
+    http.HandleFunc("/morph", morph)
     http.HandleFunc("/store", storeImage)
 
     http.HandleFunc("/config", showConfig)
@@ -59,6 +57,9 @@ func init() {
     http.HandleFunc("/configTitles", listConfigTitles)
     http.HandleFunc("/saveConfig", saveConfig)
     http.HandleFunc("/createConfig", createConfig)
+
+    http.HandleFunc("/hf", goToHf)
+    http.HandleFunc("/", goToHf)
 }
 
 const layout = "2/Jan 15:04"
@@ -68,6 +69,8 @@ var homeFaceImagesListTemplate = template.Must(template.ParseFiles("imagesList.t
 var homeFaceImageTemplate = template.Must(template.ParseFiles("imageScaled.tpl"))
 
 var homeFaceImagesCompareTemplate = template.Must(template.ParseFiles("imagesScaled.tpl"))
+
+var homeFaceImagesCompareMorphTemplate = template.Must(template.ParseFiles("imagesScaledMorph.tpl"))
 
 var homeFaceCreateConfigTemplate = template.Must(template.ParseFiles("createJsonConfig.tpl"))
 
@@ -158,6 +161,12 @@ func compareImages(w http.ResponseWriter, r *http.Request) {
 	// keys := strings.Split(r.FormValue("keys"), ",")
 	// fmt.Fprintf(w, "keys: %s, len: %d", keys, len(keys))
 	if err := homeFaceImagesCompareTemplate.Execute(w, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func morph(w http.ResponseWriter, r *http.Request) {
+	if err := homeFaceImagesCompareMorphTemplate.Execute(w, nil); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

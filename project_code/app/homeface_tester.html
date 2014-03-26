@@ -21,6 +21,7 @@
 		<script src="js/svmfilter_fft.js"></script>
 		<script src="js/mossefilter.js"></script>
 		<script src="js/utils.js"></script>
+		<script type="text/javascript" src="js/urlUtils.js"></script>
 		<script src="js/base64.js"></script>
 		<script src="js/canvas2image.js"></script>
 		<script src="js/paper-full.min.js"></script>
@@ -48,7 +49,7 @@
 			<input type="button" class="btn" value="load from url" onclick="loadUrl()"></input>
 			<input type="button" class="btn" value="edit definitions" onclick="editJson()"></input>
 			<form id="uploadFile" style="display: inline-block;" method="POST" enctype="multipart/form-data">
-				<input type="file" class="btn" id="files" name="files[]" />
+				<input type="file" class="btn" id="files" name="file" />
 			</form>
 			<input type="button" class="btn converge-only-btn" value="export" id="exportButton" disabled="true" onclick="exportData()"></input>
 			<input type="button" class="btn converge-only-btn" value="save" id="saveButton" disabled="true" onclick="saveData()"></input>
@@ -67,6 +68,16 @@
 
 			<script>
 				// jQuery Stuff
+				$( document ).ready( function(){
+					debugger
+					params = getUrlParameters();
+					if(params.hasOwnProperty('imageUrl')){
+						loadUrl(decodeURIComponent(params.imageUrl));
+					} else if(params.hasOwnProperty('imagePath')){
+						loadUrl(location.host + decodeURIComponent(params.imagePath));
+					}
+					// Get a reference to the canvas object
+				});
 				$( "#dialog-form" ).dialog({
 					  autoOpen: false,
 					  height: 700,
@@ -286,45 +297,8 @@
 				function loadImage(files) {
 						$('.converge-only-btn').attr('disabled', true) ;
 						$.get('/newUploadUrl', function(data) {
-debugger
-							$.ajax({
-								type: 'POST',
-								url: data,
-								enctype: "multipart/form-data",
-								data: files[0],
-			// cache: false,
-			// dataType: 'json',
-			processData: false, // Don't process the files
-			// contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-		success: function(data, textStatus, jqXHR)
-        {
-debugger
-        	if(typeof data.error === 'undefined')
-        	{
-        		// Success so call function to process the form
-        		// submitForm(event, data);
-        	}
-        	else
-        	{
-        		// Handle errors here
-        		console.log('ERRORS: ' + data.error);
-        	}
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-debugger
-        	// Handle errors here
-        	console.log('ERRORS: ' + textStatus);
-        	// STOP LOADING SPINNER
-        }
-						
-							});
-							/*
 							$("#uploadFile").attr('action', data);
-							$("#uploadFile").submit(function(event){
-								event.preventDefault();
-							});
-							*/
+							$("#uploadFile").submit();
 						} );
 						return;
 						reader.onload = (function(theFile) {
@@ -368,7 +342,6 @@ debugger
 					if (fileList.indexOf(fileIndex) < 0) {
 						$('.converge-only-btn').attr('disabled', true) ;
 						var reader = new FileReader();
-						$("#uploadFile").attr('action', '/test/me');
 						reader.onload = (function(theFile) {
 							return function(e) {
 								// check if positions already exist in storage
@@ -438,8 +411,10 @@ debugger
 					ctrack.reset();
 				}
 
-				function loadUrl(){
-					var imgUrl = prompt("enter url","http://www.naircare.co.uk/images/main/hub/bg-face.jpg");
+				function loadUrl(imgUrl){
+					if(!imgUrl){
+						imgUrl = prompt("enter url","http://www.naircare.co.uk/images/main/hub/bg-face.jpg");
+					}
 					if( imgUrl.indexOf("http://") != 0 ){
 						imgUrl = "http://" + imgUrl ;
 					}

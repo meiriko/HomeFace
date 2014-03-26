@@ -1,10 +1,13 @@
 package homeface
 
 import (
-        "html/template"
+        // "html/template"
         "io"
         "net/http"
+        "net/url"
 		"fmt"
+		"strings"
+		// "os"
 
         "appengine"
         "appengine/blobstore"
@@ -17,6 +20,7 @@ func serveError(c appengine.Context, w http.ResponseWriter, err error) {
         c.Errorf("%v", err)
 }
 
+/*
 var rootTemplate = template.Must(template.New("root").Parse(rootTemplateHTML))
 
 const rootTemplateHTML = `
@@ -40,6 +44,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
                 c.Errorf("%v", err)
         }
 }
+*/
 
 func handleNewUploadUrl(w http.ResponseWriter, r *http.Request) {
         c := appengine.NewContext(r)
@@ -68,13 +73,15 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
                 http.Redirect(w, r, "/", http.StatusFound)
                 return
         }
-        // http.Redirect(w, r, "/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
-        // http.Redirect(w, r, "/images", http.StatusFound)
-		fmt.Fprintf(w, "/serve/?blobKey="+string(file[0].BlobKey))
+		//http.Redirect(w, r, "/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
+		respHost := strings.Split(r.Referer(), "?")[0] 
+		respPath := url.QueryEscape( "/serve/?blobKey=" + string(file[0].BlobKey) )
+        http.Redirect(w, r, respHost + "?imagePath=" + respPath , http.StatusFound)
+        // http.Redirect(w, r, strings.Split(r.Referer(), "?")[0] + "?imagePath=/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
 }
 
 func init() {
-        http.HandleFunc("/u", handleRoot)
+        // http.HandleFunc("/u", handleRoot)
         http.HandleFunc("/serve/", handleServe)
         http.HandleFunc("/upload", handleUpload)
         http.HandleFunc("/newUploadUrl", handleNewUploadUrl)
