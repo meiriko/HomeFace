@@ -187,8 +187,8 @@ func listConfigs(w http.ResponseWriter, r *http.Request) {
 
 func listConfigTitles(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
-    q := datastore.NewQuery("DrawingConfig").Limit(20)
-    results := make([]DrawingConfig, 0, 20)
+    q := datastore.NewQuery("DrawingConfig").Limit(100)
+    results := make([]DrawingConfig, 0, 100)
     keys, err := q.GetAll(c, &results)
 	vals := ConfigResults{
 		Keys:	keys,
