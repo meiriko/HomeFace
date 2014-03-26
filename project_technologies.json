@@ -1,16 +1,16 @@
 {
     "technologies": {
         "apis": [
-            "insert apis"
+            "go datastore"
         ],
         "platforms": [
-            "heroku"
-            "AppEngine"
+            "heroku",
+            "GAE"
         ],
         "toolkits": [
             "Node.js",
             "OpenCV",
-            "jQuery"
+            "jQuery",
             "GO"
         ],
         "languages": [
