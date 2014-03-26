@@ -1,0 +1,24 @@
+.range-box, .control-box{
+	display: inline-block;
+}
+
+.control-box {
+	margin-left: 10px;
+	border: solid 1px black;
+}
+
+.range-label{
+	text-align: center;
+}
+
+.color-box {
+	float:left;
+	width:40px;
+	height:15px;
+	margin-top:3px;
+	margin-bottom:1px;
+	margin-left:5px;
+	margin-right:5px;
+	border: 1px solid black;
+}
+

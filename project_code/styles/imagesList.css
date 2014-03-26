@@ -1,0 +1,15 @@
+.image-item {
+	display: inline-block;
+}
+
+.image-title {
+	text-align: center;
+}
+
+.image-link {
+	display: block;
+}
+
+.image-link.selected {
+	border: solid 2px red;
+}

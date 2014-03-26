@@ -1,0 +1,11 @@
+.config-item {
+	display: inline-block;
+	border: solid 2px black;
+	padding: 10px;
+	margin: 5;
+}
+
+.config-title {
+	text-align: center;
+	font-weight: bold;
+}
