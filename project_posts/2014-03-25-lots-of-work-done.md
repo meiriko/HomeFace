@@ -5,4 +5,9 @@ One of the main things we added is the ability to specify, besides the final map
 
 Just as a heads up, here is a series of images that demonstrate the result:
 
-![](/project_images/mix-001.jpg)
+![](/project_images/hf-series/mix-001.jpg)
+![](/project_images/hf-series/mix-002.jpg)
+![](/project_images/hf-series/mix-003.jpg)
+![](/project_images/hf-series/mix-004.jpg)
+![](/project_images/hf-series/mix-005.jpg)
+![](/project_images/hf-series/mix-006.jpg)
